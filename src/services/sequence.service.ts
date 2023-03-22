@@ -33,3 +33,22 @@ function horizontalValidation(arr: string[]): boolean{
 
   return false
 }
+
+function verticalValidation(arr: string[]): boolean{
+  const elementLength = arr[0].length;
+
+	for (let i = 0; i < elementLength; i++) {
+		for (let j = 0; j < arr.length; j++) {
+			let count = 1;
+			const candidate = arr[j][i];
+			for (let k = j + 1; k < arr.length; k++) {
+				const currentElement = arr[k][i];
+				if (currentElement !== candidate) break;
+				count++;
+				if (count === 4) return true;
+			}
+		}
+	}
+
+  return false
+}
