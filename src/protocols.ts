@@ -7,4 +7,8 @@ interface ErrorEntity {
 	message: string;
 }
 
-export { LettersEntity, ErrorEntity };
+interface ResponseEntity {
+	is_valid: boolean;
+}
+
+export { LettersEntity, ErrorEntity, ResponseEntity };

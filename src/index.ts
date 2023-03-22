@@ -6,9 +6,8 @@ dotenv.config();
 const server = express();
 server.use(express.json());
 
-server.get("/health", (req, res) => res.send("ok"));
 server.use(sequenceRouter);
 
 server.listen(process.env.PORT, () => {
-	console.log(`Server listeninggggg on port ${process.env.PORT}`);
+	console.log(`Server listening on port ${process.env.PORT}`);
 });

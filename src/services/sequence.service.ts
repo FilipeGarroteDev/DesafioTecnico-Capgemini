@@ -1,11 +1,12 @@
+import db from "@/config/database";
 import unprocessableEntityError from "@/errors/unprocessableEntityError";
-import { LettersEntity } from "@/protocols";
+import { LettersEntity, ResponseEntity } from "@/protocols";
 
-function validate (body: LettersEntity) {
+async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	const lettersArrayLength = body.letters.length;
 
 	body.letters.forEach((element) => {
-    console.log(element.length, lettersArrayLength)
+		console.log(element.length, lettersArrayLength);
 		if (element.length !== lettersArrayLength) {
 			throw unprocessableEntityError();
 		}
@@ -15,12 +16,29 @@ function validate (body: LettersEntity) {
 	const hasVerticalSequence: boolean = verticalValidation(body.letters);
 	const hasDiagonalSequence: boolean = diagonalValidation(body.letters);
 
+	const stringifiedLettersArray: string = JSON.stringify(body);
+	const hasSequence = await db
+		.collection("sequences")
+		.findOne({ sequence_list: stringifiedLettersArray });
+
 	if (hasHorizontalSequence || hasVerticalSequence || hasDiagonalSequence) {
+		if (!hasSequence) {
+			await db.collection("sequences").insertOne({
+				sequence_list: stringifiedLettersArray,
+				is_valid: true,
+			});
+		}
 		return {
 			is_valid: true,
 		};
 	}
 
+  if (!hasSequence) {
+    await db.collection("sequences").insertOne({
+      sequence_list: stringifiedLettersArray,
+      is_valid: false,
+    });
+  }
 	return {
 		is_valid: false,
 	};
@@ -88,9 +106,8 @@ function diagonalValidation(arr: string[]): boolean {
 	return false;
 }
 
-
 const sequenceService = {
-  validate
-}
+	validate,
+};
 
-export default sequenceService
+export default sequenceService;
