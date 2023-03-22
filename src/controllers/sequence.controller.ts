@@ -14,5 +14,6 @@ export default async function sequenceController(req: Request, res: Response){
     if(error.name === "UnprocessableEntityError"){
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message)
     }
+    return res.status(httpStatus.BAD_REQUEST);
   }
 }

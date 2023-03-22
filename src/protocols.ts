@@ -11,4 +11,10 @@ interface ResponseEntity {
 	is_valid: boolean;
 }
 
-export { LettersEntity, ErrorEntity, ResponseEntity };
+interface StatsEntity {
+	count_valid: number;
+	count_invalid: number;
+	ratio: number;
+}
+
+export { LettersEntity, ErrorEntity, ResponseEntity, StatsEntity };
