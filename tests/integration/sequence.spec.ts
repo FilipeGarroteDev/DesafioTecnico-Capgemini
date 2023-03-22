@@ -1,3 +1,4 @@
+import db from "@/config/database";
 import app from "@/index";
 import httpStatus from "http-status";
 import supertest from "supertest";
@@ -45,6 +46,37 @@ describe("POST /sequences", () => {
 			expect(response.body).toEqual({
 				is_valid: false,
 			});
+		});
+
+    it("should save sequence on db, if there is no same sequence", async () => {
+			const response = await server.post("/sequence").send(invalidSequence);
+      const stringfiedSequence: string = JSON.stringify(invalidSequence);
+      const sequence = await db.collection("sequences").findOne({sequence_list: stringfiedSequence});
+      const sequencesTotal = await db.collection("sequences").find().toArray();
+
+
+			expect(response.status).toBe(httpStatus.OK);
+      expect(sequencesTotal.length).toBe(1);
+			expect(sequence).toEqual(expect.objectContaining({
+        sequence_list: stringfiedSequence,
+				is_valid: false,
+			}));
+		});
+
+    it("shouldn't save sequence on db, if there is a same sequence stored on db", async () => {
+      const stringfiedSequence: string = JSON.stringify(invalidSequence);
+      await db.collection("sequences").insertOne({sequence_list: stringfiedSequence, is_valid: false});
+			const response = await server.post("/sequence").send(invalidSequence);
+      const sequence = await db.collection("sequences").findOne({sequence_list: stringfiedSequence});
+      const sequencesTotal = await db.collection("sequences").find().toArray();
+
+
+			expect(response.status).toBe(httpStatus.OK);
+      expect(sequencesTotal.length).toBe(1);
+			expect(sequence).toEqual(expect.objectContaining({
+        sequence_list: stringfiedSequence,
+				is_valid: false,
+			}));
 		});
 	});
 });
