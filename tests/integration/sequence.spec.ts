@@ -1,13 +1,50 @@
-import app from '@/app';
-import supertest from 'supertest';
-import { cleanDb} from '../utils';
+import app from "@/index";
+import httpStatus from "http-status";
+import supertest from "supertest";
+import { cleanDb } from "../utils";
 
 beforeEach(async () => {
-  await cleanDb();
+	await cleanDb();
 });
 
 const server = supertest(app);
 
-describe('POST /sequences', () => {
-  
+describe("POST /sequences", () => {
+	const validSequence = {
+		letters: ["DUHBHB", "DUBUHD", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
+	};
+	const invalidSequence = {
+		letters: ["DUHBBB", "DUUUHD", "UBUUHU", "BHBDHH", "DDBDUB", "UDBDUH"],
+	};
+	const sequenceWithInvalidChar = {
+		letters: ["DUHBHB", "DUBAHD", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
+	};
+	const invalidSquareMatrix = {
+		letters: ["DUHBHB", "DUBUHDU", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
+	};
+
+	it("should respond with status 422, if there is a not allowed character", async () => {
+		const response = await server
+			.post("/sequence")
+			.send(sequenceWithInvalidChar);
+
+		expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+	});
+
+	it("should respond with status 422, if given list isnt a square matrix", async () => {
+		const response = await server.post("/sequence").send(invalidSquareMatrix);
+
+		expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+	});
+
+	describe("when the given list has a valid structure", () => {
+		it("should respond with status 200 and return 'is_valid: false' to user, if there is no valid sequences", async () => {
+			const response = await server.post("/sequence").send(invalidSequence);
+
+			expect(response.status).toBe(httpStatus.OK);
+			expect(response.body).toEqual({
+				is_valid: false,
+			});
+		});
+	});
 });
