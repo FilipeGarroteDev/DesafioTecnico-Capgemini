@@ -4,7 +4,11 @@
 	"description": "Esse projeto faz parte do desafio técnico para a vaga de Desenvolvedor Chatbot Jr., da Capgemini, e consiste em uma API REST, desenvolvida em Node.js, através da qual é possível validar sequências de letras em uma matriz quadrada NxN.",
 	"main": "src/index.js",
 	"scripts": {
-		"test": "NODE_ENV=test jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
+		"dev": "NODE_ENV=dev tsx watch ./src/index.ts",
+		"test": "NODE_ENV=test jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1",
+		"docker:start": "docker-compose --env-file ./.env up --build",
+		"docker:down": "docker-compose --env-file ./.env down",
+		"docker:clear": "docker-compose --env-file ./.env down -v && docker system prune -a -f --volumes"
 	},
 	"repository": {
 		"type": "git",
