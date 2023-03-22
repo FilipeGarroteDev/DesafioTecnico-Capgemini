@@ -1,6 +1,6 @@
-import db from "@/config/database";
 import unprocessableEntityError from "@/errors/unprocessableEntityError";
 import { LettersEntity, ResponseEntity } from "@/protocols";
+import sequenceRepository from "@/repositories/sequence.repository";
 
 async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	const lettersArrayLength = body.letters.length;
@@ -17,16 +17,11 @@ async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	const hasDiagonalSequence: boolean = diagonalValidation(body.letters);
 
 	const stringifiedLettersArray: string = JSON.stringify(body);
-	const hasSequence = await db
-		.collection("sequences")
-		.findOne({ sequence_list: stringifiedLettersArray });
+	const hasSequence = await sequenceRepository.searchSequence(stringifiedLettersArray);
 
 	if (hasHorizontalSequence || hasVerticalSequence || hasDiagonalSequence) {
 		if (!hasSequence) {
-			await db.collection("sequences").insertOne({
-				sequence_list: stringifiedLettersArray,
-				is_valid: true,
-			});
+			await sequenceRepository.insertNewSequence(stringifiedLettersArray, true); 
 		}
 		return {
 			is_valid: true,
@@ -34,10 +29,7 @@ async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	}
 
   if (!hasSequence) {
-    await db.collection("sequences").insertOne({
-      sequence_list: stringifiedLettersArray,
-      is_valid: false,
-    });
+    await sequenceRepository.insertNewSequence(stringifiedLettersArray, false); 
   }
 	return {
 		is_valid: false,
