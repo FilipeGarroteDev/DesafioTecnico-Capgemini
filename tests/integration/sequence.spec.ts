@@ -11,12 +11,6 @@ beforeEach(async () => {
 const server = supertest(app);
 
 describe("POST /sequences", () => {
-	const validSequence = {
-		letters: ["DUHBHB", "DUBUHD", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
-	};
-	const invalidSequence = {
-		letters: ["DUHBBB", "DUUUHD", "UBUUHU", "BHBDHH", "DDBDUB", "UDBDUH"],
-	};
 	const sequenceWithInvalidChar = {
 		letters: ["DUHBHB", "DUBAHD", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
 	};
@@ -39,6 +33,10 @@ describe("POST /sequences", () => {
 	});
 
 	describe("when the given list has a valid structure", () => {
+    const invalidSequence = {
+      letters: ["DUHBBB", "DUUUHD", "UBUUHU", "BHBDHH", "DDBDUB", "UDBDUH"],
+    };
+
 		it("should respond with status 200 and return 'is_valid: false' to user, if there is no valid sequences", async () => {
 			const response = await server.post("/sequence").send(invalidSequence);
 
@@ -78,5 +76,87 @@ describe("POST /sequences", () => {
 				is_valid: false,
 			}));
 		});
+
+    describe("when sequence is valid", () => {
+      const validHorizontalSequence = {
+        letters: ["DUHBHB", "DUHUBD", "UBUUHU", "HHBDHH", "DDDDUB", "UDBDUH"],
+      };
+      const validVerticalSequence = {
+        letters: ["DUHBHB", "DUHUHD", "UBUUHU", "HHBDHH", "BDDDUB", "UDBDUH"],
+      };
+      const validCrescentDiagonalSequence = {
+        letters: ["DUHBHB", "DUBUHD", "UBUUBU", "BHBDHH", "BDDDUB", "UDBDUH"],
+      };
+      const validDecrescentDiagonalSequence = {
+        letters: ["DUHBHB", "DDBUHD", "UBDUBU", "UHBDHH", "BDDDUB", "UDBDUH"],
+      };
+
+      it("should respond with status 200 and return 'is_valid: true' to user, if there is a valid horizontal sequence", async () => {
+        const response = await server.post("/sequence").send(validHorizontalSequence);
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.body).toEqual({
+          is_valid: true,
+        });
+      });
+
+      it("should respond with status 200 and return 'is_valid: true' to user, if there is a valid vertical sequence", async () => {
+        const response = await server.post("/sequence").send(validVerticalSequence);
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.body).toEqual({
+          is_valid: true,
+        });
+      });
+
+      it("should respond with status 200 and return 'is_valid: true' to user, if there is a valid crescent diagonal sequence", async () => {
+        const response = await server.post("/sequence").send(validCrescentDiagonalSequence);
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.body).toEqual({
+          is_valid: true,
+        });
+      });
+
+      it("should respond with status 200 and return 'is_valid: true' to user, if there is a valid decrescent diagonal sequence", async () => {
+        const response = await server.post("/sequence").send(validDecrescentDiagonalSequence);
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.body).toEqual({
+          is_valid: true,
+        });
+      });
+
+      it("should save sequence on db, if there is no same sequence", async () => {
+        const response = await server.post("/sequence").send(validVerticalSequence);
+        const stringfiedSequence: string = JSON.stringify(validVerticalSequence);
+        const sequence = await db.collection("sequences").findOne({sequence_list: stringfiedSequence});
+        const sequencesTotal = await db.collection("sequences").find().toArray();
+  
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(sequencesTotal.length).toBe(1);
+        expect(sequence).toEqual(expect.objectContaining({
+          sequence_list: stringfiedSequence,
+          is_valid: true,
+        }));
+      });
+  
+      it("shouldn't save sequence on db, if there is a same sequence stored on db", async () => {
+        const stringfiedSequence: string = JSON.stringify(validVerticalSequence);
+        await db.collection("sequences").insertOne({sequence_list: stringfiedSequence, is_valid: true});
+        const response = await server.post("/sequence").send(validVerticalSequence);
+        const sequence = await db.collection("sequences").findOne({sequence_list: stringfiedSequence});
+        const sequencesTotal = await db.collection("sequences").find().toArray();
+  
+  
+        expect(response.status).toBe(httpStatus.OK);
+        expect(sequencesTotal.length).toBe(1);
+        expect(sequence).toEqual(expect.objectContaining({
+          sequence_list: stringfiedSequence,
+          is_valid: true,
+        }));
+      });
+    })
 	});
 });
