@@ -1,8 +1,8 @@
-import sequenceController from "@/controllers/sequence.controller";
+import statsController from "@/controllers/stats.controller";
 import express from "express";
 
 const statsRouter = express.Router();
 
-statsRouter.get("/stats", sequenceController);
+statsRouter.get("/stats", statsController);
 
-export {statsRouter}
+export { statsRouter };
