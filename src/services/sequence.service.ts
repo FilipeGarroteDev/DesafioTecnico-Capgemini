@@ -5,6 +5,7 @@ function validate (body: LettersEntity) {
 	const lettersArrayLength = body.letters.length;
 
 	body.letters.forEach((element) => {
+    console.log(element.length, lettersArrayLength)
 		if (element.length !== lettersArrayLength) {
 			throw unprocessableEntityError();
 		}
