@@ -11,7 +11,7 @@ async function getAll(): Promise<StatsEntity> {
 	return {
 		count_valid: validSequences,
 		count_invalid: invalidSequences,
-		ratio,
+		ratio: ratio,
 	};
 }
 

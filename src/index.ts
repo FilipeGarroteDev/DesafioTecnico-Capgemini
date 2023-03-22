@@ -12,8 +12,10 @@ app
 	.use(sequenceRouter)
 	.use(statsRouter);
 
-app.listen(process.env.PORT, () => {
-	console.log(`Server listening on port ${process.env.PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+	app.listen(process.env.PORT, () => {
+		console.log(`Server listening on port ${process.env.PORT}`);
+	});
+}
 
 export default app;

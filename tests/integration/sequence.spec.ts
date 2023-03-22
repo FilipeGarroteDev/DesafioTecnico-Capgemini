@@ -1,4 +1,4 @@
-import db from "@/config/database";
+import db, { mongoClient } from "@/config/database";
 import app from "@/index";
 import httpStatus from "http-status";
 import supertest from "supertest";
