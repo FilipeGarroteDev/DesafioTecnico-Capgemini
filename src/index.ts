@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
-import dotenv from "dotenv";
 import { sequenceRouter } from "./routers/sequence.router";
 import { statsRouter } from "./routers/stats.router";
-dotenv.config();
+import { loadEnvs } from "./config/envs";
+
+loadEnvs()
 
 const app = express();
 
