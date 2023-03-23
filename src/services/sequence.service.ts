@@ -11,16 +11,20 @@ async function validate(body: LettersEntity): Promise<ResponseEntity> {
 		}
 	});
 
-	const hasHorizontalSequence: boolean = horizontalValidation(body.letters);
-	const hasVerticalSequence: boolean = verticalValidation(body.letters);
-	const hasDiagonalSequence: boolean = diagonalValidation(body.letters);
+	const howManyHorizontalSequence: number = horizontalValidation(body.letters);
+	const howManyVerticalSequence: number = verticalValidation(body.letters);
+	const howManyDiagonalSequence: number = diagonalValidation(body.letters);
 
+	const sequencesSum =
+		howManyHorizontalSequence +
+		howManyVerticalSequence +
+		howManyDiagonalSequence;
 	const stringifiedLettersArray: string = JSON.stringify(body);
 	const hasSequence = await sequenceRepository.searchSequence(
 		stringifiedLettersArray
 	);
 
-	if (hasHorizontalSequence || hasVerticalSequence || hasDiagonalSequence) {
+	if (sequencesSum >= 2) {
 		if (!hasSequence) {
 			await sequenceRepository.insertNewSequence(stringifiedLettersArray, true);
 		}
@@ -37,9 +41,9 @@ async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	};
 }
 
-
-function horizontalValidation(arr: string[]): boolean {
+function horizontalValidation(arr: string[]): number {
 	let auxString = "";
+	let sequenceCount = 0;
 
 	for (let i = 0; i < arr.length; i++) {
 		auxString += `${arr[i]}+`;
@@ -48,42 +52,42 @@ function horizontalValidation(arr: string[]): boolean {
 	for (let i = 0; i < auxString.length; i++) {
 		const lastChar = i + 4;
 		const currentSubstring = auxString.substring(i, lastChar);
-		if(lastChar === auxString.length) return false;
+		if (lastChar === auxString.length) return sequenceCount;
 		if (
 			currentSubstring === "BBBB" ||
 			currentSubstring === "DDDD" ||
 			currentSubstring === "UUUU" ||
 			currentSubstring === "HHHH"
 		) {
-			return true;
+			sequenceCount++;
 		}
 	}
 
-	return false;
+	return sequenceCount;
 }
 
-function transposeMatrix(arr: string[]): string[]{
+function transposeMatrix(arr: string[]): string[] {
 	let transposedMatrix = [];
 
-
-	for (let i =0; i<arr[0].length; i++){
+	for (let i = 0; i < arr[0].length; i++) {
 		let newElement = "";
-		for (let j=0; j<arr.length; j++){
+		for (let j = 0; j < arr.length; j++) {
 			newElement += arr[j][i];
 		}
-		transposedMatrix.push(newElement)
+		transposedMatrix.push(newElement);
 	}
 
 	return transposedMatrix;
 }
 
-function verticalValidation(arr: string[]): boolean {
+function verticalValidation(arr: string[]): number {
 	const transposedMatrix = transposeMatrix(arr);
 	return horizontalValidation(transposedMatrix);
 }
 
-function diagonalValidation(arr: string[]): boolean {
+function diagonalValidation(arr: string[]): number {
 	const elementLength = arr[0].length;
+	let sequenceCount = 0;
 
 	for (let i = 0; i < elementLength; i++) {
 		for (let j = 0; j < arr.length; j++) {
@@ -96,12 +100,12 @@ function diagonalValidation(arr: string[]): boolean {
 				if (nextElement !== candidate && previousElement !== candidate) break;
 				count++;
 				increment++;
-				if (count === 4) return true;
+				if (count === 4) sequenceCount++;
 			}
 		}
 	}
 
-	return false;
+	return sequenceCount;
 }
 
 const sequenceService = {
