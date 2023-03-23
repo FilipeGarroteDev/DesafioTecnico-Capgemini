@@ -16,40 +16,46 @@ async function validate(body: LettersEntity): Promise<ResponseEntity> {
 	const hasDiagonalSequence: boolean = diagonalValidation(body.letters);
 
 	const stringifiedLettersArray: string = JSON.stringify(body);
-	const hasSequence = await sequenceRepository.searchSequence(stringifiedLettersArray);
+	const hasSequence = await sequenceRepository.searchSequence(
+		stringifiedLettersArray
+	);
 
 	if (hasHorizontalSequence || hasVerticalSequence || hasDiagonalSequence) {
 		if (!hasSequence) {
-			await sequenceRepository.insertNewSequence(stringifiedLettersArray, true); 
+			await sequenceRepository.insertNewSequence(stringifiedLettersArray, true);
 		}
 		return {
 			is_valid: true,
 		};
 	}
 
-  if (!hasSequence) {
-    await sequenceRepository.insertNewSequence(stringifiedLettersArray, false); 
-  }
+	if (!hasSequence) {
+		await sequenceRepository.insertNewSequence(stringifiedLettersArray, false);
+	}
 	return {
 		is_valid: false,
 	};
 }
 
+
 function horizontalValidation(arr: string[]): boolean {
-	let candidate = "";
+	let auxString = "";
 
 	for (let i = 0; i < arr.length; i++) {
-		const currentElement = arr[i];
-		for (let j = 0; j < currentElement.length; j++) {
-			let count = 1;
-			const remainingLetters = currentElement.length - j - 1;
-			if (remainingLetters < 3) break;
-			candidate = currentElement[j];
-			for (let k = j + 1; k <= currentElement.length; k++) {
-				if (count === 4) return true;
-				if (currentElement[k] !== candidate) break;
-				count++;
-			}
+		auxString += `${arr[i]}+`;
+	}
+
+	for (let i = 0; i < auxString.length; i++) {
+		const lastChar = i + 4;
+		const currentSubstring = auxString.substring(i, lastChar);
+		if(lastChar === auxString.length) return false;
+		if (
+			currentSubstring === "BBBB" ||
+			currentSubstring === "DDDD" ||
+			currentSubstring === "UUUU" ||
+			currentSubstring === "HHHH"
+		) {
+			return true;
 		}
 	}
 
