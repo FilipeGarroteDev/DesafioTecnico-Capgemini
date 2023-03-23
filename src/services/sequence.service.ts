@@ -62,23 +62,24 @@ function horizontalValidation(arr: string[]): boolean {
 	return false;
 }
 
-function verticalValidation(arr: string[]): boolean {
-	const elementLength = arr[0].length;
+function transposeMatrix(arr: string[]): string[]{
+	let transposedMatrix = [];
 
-	for (let i = 0; i < elementLength; i++) {
-		for (let j = 0; j < arr.length; j++) {
-			let count = 1;
-			const candidate = arr[j][i];
-			for (let k = j + 1; k < arr.length; k++) {
-				const currentElement = arr[k][i];
-				if (currentElement !== candidate) break;
-				count++;
-				if (count === 4) return true;
-			}
+
+	for (let i =0; i<arr[0].length; i++){
+		let newElement = "";
+		for (let j=0; j<arr.length; j++){
+			newElement += arr[j][i];
 		}
+		transposedMatrix.push(newElement)
 	}
 
-	return false;
+	return transposedMatrix;
+}
+
+function verticalValidation(arr: string[]): boolean {
+	const transposedMatrix = transposeMatrix(arr);
+	return horizontalValidation(transposedMatrix);
 }
 
 function diagonalValidation(arr: string[]): boolean {
