@@ -14,7 +14,7 @@
 
 </div>
 
-Esse projeto faz parte do desafio técnico para a vaga de Desenvolvedor Chatbot Jr., da Capgemini, e consiste em uma API REST, desenvolvida em Node.js, através da qual é possível validar sequências de letras em uma matriz quadrada NxN. Há dois endpoints por meio dos quais é possível, dada uma array de strings, verificar se há uma sequência válida, bem como obter as estatísticas referentes às sequências válidas, inválidas e relação sequências válidas/total.
+Esse projeto faz parte do desafio técnico para a vaga de Desenvolvedor Chatbot, da Capgemini, e consiste em uma API REST, desenvolvida em Node.js, através da qual é possível validar sequências de letras em uma matriz quadrada NxN. Há dois endpoints por meio dos quais é possível, dada uma array de strings, verificar se há uma sequência válida, bem como obter as estatísticas referentes às sequências válidas, inválidas e relação sequências válidas/total.
 
 ### 1. Endpoint POST /sequence:
 Esse endpoint receberá como parâmetro, um JSON com a sequência de letras (Array de Strings), onde, cada elemento desse array representa uma linha de uma **matriz quadrada de (NxN)**, como nos exemplos abaixo:
