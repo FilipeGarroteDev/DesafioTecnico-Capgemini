@@ -108,7 +108,7 @@ npm run docker:clear
 
 <br>
 
-## 🚀 Testando a API
+## 🚀 Utilizando a API
 
 Após seguir os passos acima, será possível fazer as requisições POST e GET, utilizando os endpoints abaixo: 
 
