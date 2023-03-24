@@ -96,15 +96,19 @@ sudo apt-get install docker-compose
 npm run docker:start
 ```
 
-5. Caso queira parar a aplicação, rode:
+5. Tudo pronto!! Agora que a API está rodando, basta acessá-la através dos endpoints descritos na seção abaixo.
+
+6 (OBS). Caso queira parar a aplicação, rode:
 ```bash
 npm run docker:down
 ```
 
-6. Caso queira deletar a aplicação, bem como seus volumes, containers e imagens, rode:
+7 (OBS). Caso queira deletar a aplicação, bem como seus volumes, containers e imagens, rode:
 ```bash
 npm run docker:clear
 ```
+
+
 
 <br>
 
