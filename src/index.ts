@@ -1,9 +1,6 @@
 import express, { Request, Response } from "express";
 import { sequenceRouter } from "./routers/sequence.router";
 import { statsRouter } from "./routers/stats.router";
-import { loadEnvs } from "./config/envs";
-
-loadEnvs()
 
 const app = express();
 

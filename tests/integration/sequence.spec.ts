@@ -103,7 +103,7 @@ describe("POST /sequences", () => {
         letters: ["DUHBHB", "DDBUHD", "UBDUBU", "UHBDHH", "BDDBUB", "UDBDBH"],
       };
       const validMixSequence = {
-        letters: ["DUHBHB", "DUBUHD", "UBUUHU", "BHBDHH", " DDDDUB", "UDBDUH"],
+        letters: ["DUHBHB", "DUBUHD", "UBUUHU", "BHBDHH", "DDDDUB", "UDBDUH"],
       };
 
       it("should respond with status 200 and return 'is_valid: true' to user, if there are two or more valid horizontal sequences", async () => {
