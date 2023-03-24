@@ -1,7 +1,7 @@
 <div align="center">
 
 # 💻 Desafio Técnico - Capgemini 
-  [Escopo](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-escopo-do-case) | [Tecnologias](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#tecnologias-utilizadas) | [Como rodar?](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#%EF%B8%8Fcomo-rodar-o-projeto) | [Utilizando a API]() | [Rodando os testes](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-como-rodar-os-testes-automatizados) | [Contato](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#desenvolvido-por-filipe-garrote)
+  [Escopo](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-escopo-do-case) | [Tecnologias](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#tecnologias-utilizadas) | [Como rodar?](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#%EF%B8%8Fcomo-rodar-o-projeto) | [Utilizando a API](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini/blob/main/README.md#-utilizando-a-api) | [Rodando os testes](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-como-rodar-os-testes-automatizados) | [Contato](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#desenvolvido-por-filipe-garrote)
 
 
 </div>
