@@ -1,7 +1,7 @@
 <div align="center">
 
 # 💻 Desafio Técnico - Capgemini 
-  [Sobre](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#fleety) | [Funcionalidades](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#funcionalidades) | [Tecnologias](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#tecnologias) | [Rodar com Docker](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#como-rodar-o-projeto-com-docker) | [Rodar localmente](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#como-rodar-a-aplica%C3%A7%C3%A3o-localmente) | [Rodar testes](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#como-rodar-a-aplica%C3%A7%C3%A3o-localmente) | [Informações Importantes](https://github.com/FilipeGarroteDev/Fleety-AutoService-Fullstack#informa%C3%A7%C3%B5es-importantes-para-o-uso-da-aplica%C3%A7%C3%A3o)
+  [Escopo](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-escopo-do-case) | [Tecnologias](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#tecnologias-utilizadas) | [Como rodar?](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#%EF%B8%8Fcomo-rodar-o-projeto) | [Utilizando a API]() | [Rodando os testes](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#-como-rodar-os-testes-automatizados) | [Contato](https://github.com/FilipeGarroteDev/DesafioTecnico-Capgemini#desenvolvido-por-filipe-garrote)
 
 
 </div>
